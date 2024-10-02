@@ -15,8 +15,51 @@ public class EmployeeService implements IEmployeeService {
     private final IEmployeeRepository employeeRepository;
 
     @Override
+    public void addEmployee(EmployeeRequest employeeRequest) {
+        Employee employee = Employee.builder()
+                .name(employeeRequest.getName())
+                .age(employeeRequest.getAge())
+                .position(employeeRequest.getPosition())
+                .build();
+
+        employeeRepository.save(employee);
+    }
+
+    @Override
+    public EmployeeResponse getEmployeeById(Long id) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("No employee found with id " + id));
+
+        return mapToEmployeeResponse(employee);
+    }
+
+    @Override
     public List<EmployeeResponse> getAllEmployees() {
         return employeeRepository.findAll().stream()
+                .map(this::mapToEmployeeResponse).toList();
+    }
+
+    @Override
+    public List<EmployeeResponse> getEmployeesByDepartmentId(Long departmentId) {
+        List<Employee> employees = employeeRepository.findByDepartmentId(departmentId);
+
+        if (employees.isEmpty()) {
+            throw new IllegalArgumentException("No employees found for department with id " + departmentId);
+        }
+
+        return employees.stream()
+                .map(this::mapToEmployeeResponse).toList();
+    }
+
+    @Override
+    public List<EmployeeResponse> getEmployeesByOrganizationId(Long organizationId) {
+        List<Employee> employees = employeeRepository.findByOrganizationId(organizationId);
+
+        if (employees.isEmpty()) {
+            throw new IllegalArgumentException("No employees found for organization with id " + organizationId);
+        }
+
+        return employees.stream()
                 .map(this::mapToEmployeeResponse).toList();
     }
 
@@ -26,16 +69,5 @@ public class EmployeeService implements IEmployeeService {
                 .age(employee.getAge())
                 .position(employee.getPosition())
                 .build();
-    }
-
-    @Override
-    public void addEmployee(EmployeeRequest employeeRequest) {
-        Employee employee = Employee.builder()
-                .name(employeeRequest.getName())
-                .age(employeeRequest.getAge())
-                .position(employeeRequest.getPosition())
-                .build();
-
-        employeeRepository.save(employee);
     }
 }

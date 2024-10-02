@@ -1,0 +1,10 @@
+version: "3.3"
+
+services:
+  employeeservice-db:
+    image: mysql:latest
+    ports:
+      - "3310:3306"
+    environment:
+      MYSQL_DATABASE: 'employeeservice_db'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'

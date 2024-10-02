@@ -23,7 +23,10 @@
 	</developers>
     <modules>
         <module>employee-service</module>
-    </modules>
+        <module>department-service</module>
+        <module>organization-service</module>
+		<module>notification-service</module>
+	</modules>
     <scm>
 		<connection/>
 		<developerConnection/>

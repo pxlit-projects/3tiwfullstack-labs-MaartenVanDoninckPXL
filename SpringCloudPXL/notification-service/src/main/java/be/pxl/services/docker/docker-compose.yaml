@@ -1,0 +1,10 @@
+version: "3.3"
+
+services:
+  notificationservice-db:
+    image: mysql:latest
+    ports:
+      - "3313:3306"
+    environment:
+      MYSQL_DATABASE: 'notificationservice_db'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'

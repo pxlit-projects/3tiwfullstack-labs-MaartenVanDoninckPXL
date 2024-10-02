@@ -1,0 +1,10 @@
+version: "3.3"
+
+services:
+  organizationservice-db:
+    image: mysql:latest
+    ports:
+      - "3312:3306"
+    environment:
+      MYSQL_DATABASE: 'organizationservice_db'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'

@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EmployeeServiceApp {
+public class NotificationServiceApp {
     public static void main(String[] args) {
-        SpringApplication.run(EmployeeServiceApp.class, args);
+        SpringApplication.run(NotificationServiceApp.class, args);
     }
 }
