@@ -3,7 +3,7 @@ package be.pxl.services.services;
 import be.pxl.services.domain.Employee;
 import be.pxl.services.domain.dto.EmployeeRequest;
 import be.pxl.services.domain.dto.EmployeeResponse;
-import be.pxl.services.repository.IEmployeeRepository;
+import be.pxl.services.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +12,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class EmployeeService implements IEmployeeService {
-    private final IEmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Override
-    public void addEmployee(EmployeeRequest employeeRequest) {
+    public void createEmployee(EmployeeRequest employeeRequest) {
         Employee employee = Employee.builder()
                 .name(employeeRequest.getName())
                 .age(employeeRequest.getAge())

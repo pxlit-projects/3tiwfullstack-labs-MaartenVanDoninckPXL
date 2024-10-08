@@ -17,7 +17,8 @@ public class DepartmentController {
     private final IDepartmentService departmentService;
 
     @PostMapping
-    public void addDepartment(@RequestBody DepartmentRequest departmentRequest) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createDepartment(@RequestBody DepartmentRequest departmentRequest) {
         departmentService.addDepartment(departmentRequest);
     }
 

@@ -1,15 +1,25 @@
 package be.pxl.services.services;
 
 import be.pxl.services.domain.Organization;
+import be.pxl.services.domain.dto.OrganizationRequest;
 import be.pxl.services.domain.dto.OrganizationResponse;
-import be.pxl.services.repository.IOrganizationRepository;
+import be.pxl.services.repository.OrganizationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class OrganizationService implements IOrganizationService {
-    private final IOrganizationRepository organizationRepository;
+    private final OrganizationRepository organizationRepository;
+
+    public void createOrganization(OrganizationRequest organization) {
+        Organization newOrganization = Organization.builder()
+                .name(organization.getName())
+                .address(organization.getAddress())
+                .build();
+
+        Organization savedOrganization = organizationRepository.save(newOrganization);
+    }
 
     @Override
     public OrganizationResponse getOrganizationById(Long id) {

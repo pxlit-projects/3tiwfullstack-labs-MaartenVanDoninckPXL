@@ -1,20 +1,25 @@
 package be.pxl.services.controller;
 
+import be.pxl.services.domain.Organization;
+import be.pxl.services.domain.dto.OrganizationRequest;
 import be.pxl.services.services.OrganizationService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/organization")
 @RequiredArgsConstructor
 public class OrganizationController {
     private final OrganizationService organizationService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createOrganization(@RequestBody OrganizationRequest organization) {
+        organizationService.createOrganization(organization);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrganizationById(@PathVariable Long id) {
