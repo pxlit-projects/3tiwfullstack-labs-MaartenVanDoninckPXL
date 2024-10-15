@@ -1,5 +1,7 @@
 package be.pxl.services.services;
 
+import be.pxl.services.client.NotificationClient;
+import be.pxl.services.domain.NotificationRequest;
 import be.pxl.services.domain.Organization;
 import be.pxl.services.domain.dto.OrganizationRequest;
 import be.pxl.services.domain.dto.OrganizationResponse;
@@ -11,14 +13,20 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OrganizationService implements IOrganizationService {
     private final OrganizationRepository organizationRepository;
+    private final NotificationClient notificationClient;
 
     public void createOrganization(OrganizationRequest organization) {
         Organization newOrganization = Organization.builder()
                 .name(organization.getName())
                 .address(organization.getAddress())
                 .build();
+        organizationRepository.save(newOrganization);
 
-        Organization savedOrganization = organizationRepository.save(newOrganization);
+        NotificationRequest notificationRequest = NotificationRequest.builder()
+                .message("Employee " + organization.getName() + " has been created")
+                .sender("Maarten")
+                .build();
+        notificationClient.sendNotification(notificationRequest);
     }
 
     @Override

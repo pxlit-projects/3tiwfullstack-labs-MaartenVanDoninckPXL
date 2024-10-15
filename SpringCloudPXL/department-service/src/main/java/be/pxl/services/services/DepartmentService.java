@@ -1,6 +1,8 @@
 package be.pxl.services.services;
 
+import be.pxl.services.client.NotificationClient;
 import be.pxl.services.domain.Department;
+import be.pxl.services.domain.NotificationRequest;
 import be.pxl.services.domain.dto.DepartmentRequest;
 import be.pxl.services.domain.dto.DepartmentResponse;
 import be.pxl.services.repository.DepartmentRepository;
@@ -13,14 +15,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DepartmentService implements IDepartmentService {
     private final DepartmentRepository departmentRepository;
+    private final NotificationClient notificationClient;
 
     @Override
     public void addDepartment(DepartmentRequest departmentRequest) {
         Department department = Department.builder()
                 .name(departmentRequest.getName())
                 .build();
-
         departmentRepository.save(department);
+
+        NotificationRequest notificationRequest = NotificationRequest.builder()
+                .message("Employee " + department.getName() + " has been created")
+                .sender("Maarten")
+                .build();
+        notificationClient.sendNotification(notificationRequest);
     }
 
     @Override
